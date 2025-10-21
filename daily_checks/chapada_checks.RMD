@@ -42,8 +42,10 @@ local({
 ```
 
 ``` {r load data, echo = F}
+#set wd
+wd =  "C:/Users/LaGorgaL.S/Documents/Chapata_Stem/daily_checks/"
 #read in files from dropbox
-dbfold <- "C:/Users/lagorgal/Smithsonian Dropbox/Lydia LaGorga/Chapada_Stem_Data/0_RawData/archive_data"
+dbfold <- "C:/Campbellsci/LoggerNet/CHAPADA_Loggerfiles/"
 files <- list.files(dbfold, pattern = "*.dat", full.names = TRUE)
 names(files) <- gsub(".dat", "", basename(files))
 
