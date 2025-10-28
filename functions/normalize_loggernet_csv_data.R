@@ -14,27 +14,13 @@
 library(data.table)
 library(tidyverse)
 
-normalize_loggernet_csv_data <- function(design, plotnames, varnames, table, csv_dir) {
+normalize_loggernet_csv_data <- function(design, plotnames, varnames, table, data_dir) {
   
-  #the experimental design is organized into three documents. The first step is to merge them to one table. 
-  merged_design <- design %>%
-    left_join(plotnames, by = "link")%>%
-    left_join(varnames, by = "research_name")
-  
-  #filter the design table to just the specific loggernet table we are working with and get the cr1000_names
-  design_table <- filter(merged_design, Table == table)
-  headers <- design_table$cr1000_name
-  #also get the id_cols that are collected for the whole zone
+  #identify the non-chamber level variables to leave out of the normalization
   id_cols <- design_table%>%
     filter(var_type %in% c("zone","experiment"))%>%
     pull(cr1000_name)
   
-  
-  #get the CSV file associated with that table and change headers to cr1000 names. 
-  csv_data <- read.csv(list.files(csv_dir, pattern = table, full.names = T)) %>%
-    select(-X, -Logger, -Table, -Format) #may change when applied to other projects. 
-  
-  colnames(csv_data) <- headers
   
   #check that there are chamber level variables. If not, you can skip the normalization. 
   non_id_cols <- design_table%>%
