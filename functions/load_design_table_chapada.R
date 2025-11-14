@@ -1,6 +1,6 @@
 ### This function will load the design tables for the project and merge them into one big table for processing 
 
-
+library(tidyverse)
 ##Arguments: 
 #design -- full name/directory of the main design table for the project. 
 #plotnames -- full name/directory of the plotnames design table for the project.

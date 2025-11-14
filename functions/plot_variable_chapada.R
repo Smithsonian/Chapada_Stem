@@ -9,11 +9,10 @@
 library(ggplot2)
 
 
-plot_variable <- function(csv_data, variable){
+plot_variable_chapada <- function(normalized_data, variable){
 
-  csv_data$timestamp <- as.POSIXct(csv_data$timestamp)
-  
-  plot <- ggplot(csv_data, aes(x = timestamp, y = variable)) +
+
+  plot <- ggplot(normalized_data, aes(x = timestamp_local, y = variable)) +
     geom_line(color = "steelblue") +
     labs(title = "Time Series Plot", x = "Time", y = variable) +
     theme_minimal()

@@ -3,9 +3,7 @@
 
 
 ##Arguements: 
-#design -- full name/directory of the main design table for the project. 
-#plotnames -- full name/directory of the plotnames design table for the project.
-#varnames -- full name/directory of the design-type design table for the project.
+#design_table <- the merged and filtered design table for the data that you want to process. 
 #table -- the name of the loggernet table that you would like to process
 #csv_dir  --  the directory to the raw loggernet data in csv format 
 
@@ -14,7 +12,7 @@
 library(data.table)
 library(tidyverse)
 
-normalize_loggernet_csv_data <- function(design, plotnames, varnames, table, data_dir) {
+normalize_loggernet_csv_data_chapada <- function(csv_data, design_table, data_dir) {
   
   #identify the non-chamber level variables to leave out of the normalization
   id_cols <- design_table%>%
@@ -36,7 +34,7 @@ normalize_loggernet_csv_data <- function(design, plotnames, varnames, table, dat
     #merge the data table with the design table based on the cr1000_names. 
     left_join(design_table, by = "cr1000_name")%>%
     #filter to just the columns of the design table that get published. 
-    select(logger, id_cols, treatment, zone, chamber, value, research_name)%>%
+    select(all_of(id_cols), treatment, zone, chamber, value, research_name)%>%
     #now when you put the table back in wide format using research_name, it is in it's normalized form. 
     pivot_wider(names_from=research_name, values_from=value)
   }

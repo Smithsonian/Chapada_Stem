@@ -3,7 +3,7 @@
 # filename <- path to the raw loggernet data file 
 library(tidyverse)
 
-read_datalogger_file <- function(filename, quiet = FALSE, ...) {
+read_datalogger_file_chapada <- function(filename, quiet = FALSE, ...) {
   
   # Parse line one to extract logger and table names
   dat <- read_lines(filename)
