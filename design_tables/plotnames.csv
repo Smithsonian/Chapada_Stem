@@ -1,0 +1,21 @@
+﻿zone,chamber,treatment,link
+high,H1,no termite,H1
+high,H2,no termite,H2
+high,H3,no termite,H3
+high,H4,no termite,H4
+high,H5,no termite,H5
+high,H6,no termite,H6
+high,H7,no termite,H7
+high,H8,no termite,H8
+high,H9,termite,H9
+high,NA,NA,high
+low,L1,no termite,L1
+low,L2,no termite,L2
+low,L3,no termite,L3
+low,L4,no termite,L4
+low,L5,no termite,L5
+low,L6,no termite,L6
+low,L7,no termite,L7
+low,L8,no termite,L8
+low,L9,termite,L9
+low,NA,NA,low 

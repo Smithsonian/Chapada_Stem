@@ -1,0 +1,93 @@
+﻿research_name,type,units,lower_bound,upper_bound,rolling_clean,variability constant
+logger,character,NA,,,no,
+timestamp_local,numeric,local,,,no,
+record,numeric,NA,,,no,
+battery_voltage_min,numeric,volts,10,14,no,
+panel_temperature,numeric,degrees C,0.1,100,no,
+barometric_pressure,numeric,mbar,700,1100,yes,10
+relative_humidity,numeric,percent,0.1,100,yes,20
+air_temperature,numeric,degrees C,0.1,100,yes,10
+battery_voltage,numeric,volts,10,14,no,
+solar_voltage,numeric,volts,22,30,no,
+battery_check,character,NA,,,no,
+solar_check,character,NA,,,no,
+flag_1,numeric,NA,,,no,
+flag_2,numeric,NA,,,no,
+flag_3,numeric,NA,,,no,
+flag_4,numeric,NA,,,no,
+flag_5,numeric,NA,,,no,
+flag_6,numeric,NA,,,no,
+flag_7,numeric,NA,,,no,
+flag_8,numeric,NA,,,no,
+flag_9,numeric,NA,,,no,
+flag_10,numeric,NA,,,no,
+flag_11,numeric,NA,,,no,
+flag_12,numeric,NA,,,no,
+flag_13,numeric,NA,,,no,
+flag_14,numeric,NA,,,no,
+flag_15,numeric,NA,,,no,
+flag_16,numeric,NA,,,no,
+logger_name,character,NA,,,no,
+packbus_id,character,NA,,,no,
+redox_5cm_refa,numeric,mVolts,0.1,3000,yes,50
+redox_15cm_refa,numeric,mVolts,0.1,3000,yes,50
+redox_5cm_refb,numeric,mVolts,0.1,3000,yes,50
+redox_15cm_refb,numeric,mVolts,0.1,3000,yes,50
+battv_avg,numeric,volts,10,14,no,
+volumetric_water_content_teros12,numeric,m3/m3,0.1,5000,yes,200
+air_temperature_teros12,numeric,degrees C,0.1,100,yes,10
+electrical_conductivity_teros12,numeric,uS/cm,0,100,no,
+solar_fd_avg_watts,numeric,W/m2,0,2000,yes,500
+solar_tf_total_mj,numeric,MJ/m2,0,100,yes,1
+rain_accumulation_total,numeric,mm,0,10000,no,
+wind_speed,numeric,m/s,0,100,no,
+wind_direction_d1,numeric,degrees,0,360,no,
+wind_direction_sd1,numeric,degrees,0,100,no,
+max_wind_speed_max,numeric,m/s,0,100,no,
+max_wind_speed_tmx,numeric,local,,,no,
+invalid_wind_total,numeric,NA,,,no,
+air_temperature_avg,numeric,degrees C,0.1,100,yes,10
+air_temperature_max,numeric,degrees C,0.1,100,yes,10
+air_temperature_tmx,numeric,local,,,no,
+air_temperature_min,numeric,degrees C,0.1,100,yes,10
+air_temperature_tmn,numeric,local,,,no,
+vapor_pressure_avg,numeric,mbar,0.1,1000,yes,10
+barometric_pressure_avg,numeric,mbar,700,1100,yes,10
+barometric_pressure_max,numeric,mbar,700,1100,yes,10
+barometric_pressure_tmx,numeric,local,,,no,
+barometric_pressure_min,numeric,mbar,700,1100,yes,10
+barometric_pressure_tmn,numeric,local,,,no,
+relative_humidity_decimal,numeric,decimal,0,1,yes,0.2
+relative_humidity_temperature,numeric,degrees C,0.1,100,yes,10
+vapor_pressure_deficit_avg,numeric,pascals,-1000,0,yes,50
+vapor_pressure_deficit_max,numeric,pascals,-1000,0,yes,50
+vapor_pressure_deficit_tmx,numeric,local,,,no,
+vapor_pressure_deficit_min,numeric,pascals,-1000,0,yes,50
+vapor_pressure_deficit_tmn,numeric,local,,,no,
+NS_tilt,numeric,degrees,0,-360,no,
+WE_tilt,numeric,degrees,0,360,no,
+lightning_strikes_total,numeric,count,0,100000,no,
+dist_km_min,numeric,km,0,1000,no,
+dist_km_tmin,numeric,local,,,no,
+metadata,character,NA,,,no,
+wind_speed_wvc1,numeric,m/s,0,400,no,
+wind_speed_wvc2,numeric,m/s,0,400,no,
+wind speed_max,numeric,m/s,0,400,no,
+wind_speed_tmx,numeric,local,,,no,
+vapor_pressure_max,numeric,pascals,0,1000,no,
+vapor_pressure_tmx,numeric,local,,,no,
+vapor_pressure_min,numeric,pascals,0,1000,no,
+vapor_pressure_tmn,numeric,local,,,no,
+relative_humidity_site_max,numeric,percent,0,100,no,
+relative_humidity_site_min,numeric,percent,0,100,no,
+relative_humidity_c_max,numeric,degrees C,0,100,no,
+relative_humidity_c_min,numeric,degrees C,0,100,no,
+ns_tilt_max,numeric,degrees,-360,0,no,
+ns_tilt_tmx,numeric,local,,,no,
+ns_tilt_min,numeric,degrees,-360,0,no,
+ns_tilt_tmn,numeric,local,,,no,
+we_tilt_max,numeric,degrees,0,360,no,
+we_tilt_tmx,numeric,local,,,no,
+we_tilt_min,numeric,degrees,0,360,no,
+we_tilt_tmn,numeric,local,,,no,
+cv_meta,character,NA,,,no,
