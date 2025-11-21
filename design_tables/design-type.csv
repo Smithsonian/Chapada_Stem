@@ -4,7 +4,7 @@ timestamp_local,numeric,local,,,no,
 record,numeric,NA,,,no,
 battery_voltage_min,numeric,volts,10,14,no,
 panel_temperature,numeric,degrees C,0.1,100,no,
-barometric_pressure,numeric,mbar,700,1100,yes,10
+barometric_pressure,numeric,mbar,500,1100,yes,10
 relative_humidity,numeric,percent,0.1,100,yes,20
 air_temperature,numeric,degrees C,0.1,100,yes,10
 battery_voltage,numeric,volts,10,14,no,

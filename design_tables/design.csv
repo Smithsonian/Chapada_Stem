@@ -130,7 +130,7 @@ electrical_conductivity_teros12,Chapada_High,801,Chapada_High_Teros12Table,H8,"T
 volumetric_water_content_teros12,Chapada_High,801,Chapada_High_Teros12Table,H9,"Teros12(9,1)",teros12_9_1,calibrated ADC counts for volumetric water content,chamber,15
 air_temperature_teros12,Chapada_High,801,Chapada_High_Teros12Table,H9,"Teros12(9,2)",teros12_9_2,air temperature,chamber,15
 electrical_conductivity_teros12,Chapada_High,801,Chapada_High_Teros12Table,H9,"Teros12(9,3)",teros12_9_3,bulk electrical conductivity normalized to 25 degrees C,chamber,15
-logger,Chapada_Low,802,Chapada_Low_ChamberBME280,low,Logger,logger,logger name,zone,15
+logger,Chapada_Low,802,Chapada_Low_ChamberBME280,low,Logger,logger,logger name,zone,1
 timestamp_local,Chapada_Low,802,Chapada_Low_ChamberBME280,low,TIMESTAMP,timestamp,timestamp,zone,1
 record,Chapada_Low,802,Chapada_Low_ChamberBME280,low,RECORD,record,record,zone,1
 battery_voltage_min,Chapada_Low,802,Chapada_Low_ChamberBME280,low,BattV_Min,battv_min,minimum voltage from battery over 15 minute time period,zone,1

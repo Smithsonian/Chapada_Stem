@@ -14,7 +14,8 @@ write_monthly_data_chapada <- function(dt, rawCSVData_dir, filename) {
   for (m in months){
     #Filter the current dataset down to just the month in question
     dt_m <- dt %>%
-      filter(year_month == m)
+      filter(year_month == m)%>%
+      select(!year_month)#once this has been used for filtering, immediately get rid of it so it does not create an aggragation issue
     
     #define a name for this monthly file
     file_path <- paste0(rawCSVData_dir,filename,"/",filename,"_",m,".csv")
@@ -28,9 +29,13 @@ write_monthly_data_chapada <- function(dt, rawCSVData_dir, filename) {
     if(!file.exists(file_path)){
       
       #run this function which handles the possibility of duplicate timestamps 
-      aggregated_data <- aggregate_data_chapada(dt_m)%>%
-        select(!year_month)
-     
+      aggregated_data <- aggregate_data_chapada(dt_m)
+      
+      aggregated_data <- aggregated_data %>%
+        mutate(.TIMESTAMP_SORT = as.POSIXct(TIMESTAMP, format = "%Y-%m-%d %H:%M:%S")) %>%
+        arrange(.TIMESTAMP_SORT) %>%
+        select(-.TIMESTAMP_SORT)
+
       write.csv(aggregated_data, file_path, row.names = FALSE)
       
     }else{
@@ -38,13 +43,17 @@ write_monthly_data_chapada <- function(dt, rawCSVData_dir, filename) {
       #if there is data already for this month, append the new data to that file and remove any duplicates 
       existing_data <- read.csv(file_path)
       
-      #Combine the existing data and the new data 
+      #Combine the existing data and the new data -- could be more robust 
       combined_data <- rbindlist(list(dt_m, existing_data), use.names=F)
       
       #run this function which handles the possibility of duplicate timestamps 
-      aggregated_combined_data <- aggregate_data_chapada(combined_data)%>%
-        select(!year_month)
+      aggregated_combined_data <- aggregate_data_chapada(combined_data)
       
+      aggregated_combined_data <- aggregated_combined_data %>%
+        mutate(.TIMESTAMP_SORT = as.POSIXct(TIMESTAMP, format = "%Y-%m-%d %H:%M:%S")) %>%
+        arrange(.TIMESTAMP_SORT) %>%
+        select(-.TIMESTAMP_SORT)
+
       write.csv(aggregated_combined_data, file_path, row.names = FALSE)
       
     }
