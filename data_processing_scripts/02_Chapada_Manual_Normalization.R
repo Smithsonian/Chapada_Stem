@@ -21,9 +21,9 @@ exclude_months <- c("2025-11", "2025-10")%>%
 #Load directories and Design Table ---------------------------------------------------------------------------------
 
 #relevant directories
-rawCSVData_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/1_RawCSVData/unprocessed/")
-rawCSVDataArchive_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/1_RawCSVData/processed/")
-L0_NormalizedData_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/2_L0_NormalizedData/")
+rawCSVData_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/sensor_data/1_RawCSVData/unprocessed/")
+rawCSVDataArchive_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/sensor_data/1_RawCSVData/processed/")
+L0_NormalizedData_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/sensor_data/2_L0_NormalizedData/")
 
 #design table 
 merged_design <- load_design_table()
@@ -34,21 +34,28 @@ table_names <- unique(merged_design$Table)
 
 #File Selection for Processing ---------------------------------------------------------------------------------------
 for (table in table_names){
+  paste0("\nProcessing ",table,":\n")
   
-  #filter the design table to just the specific loggernet table we are working with and get the cr1000_names
-  design_table <- filter(merged_design, Table == table)
-  headers <- design_table$cr1000_name
   #define all the files that are to be processed based on the table name and the excluded months. 
   files <- list.files(rawCSVData_dir, pattern = table, recursive = T, full.names = T)%>%
     str_subset(pattern = exclude_months, negate = TRUE)
   
+  #filter the design table to just the specific loggernet table we are working with and get the cr1000_names
+  design_table <- filter(merged_design, Table == table)
+  
   for (file in files){ 
+    
+    
     
     #get the CSV file associated with that table and change headers to cr1000 names. 
     csv_data <- read.csv(file) %>%
       select(-Table, -Format)
-    colnames(csv_data) <-headers
     
+    #filter the design table to only include the variables that are active during this month. 
+    design_table_month <- filter_to_active_variables_chapada(csv_data, design_table)
+  
+    #change the loggernet headers to the cr1000 names given in the design table. 
+    csv_data <- convert_loggernet_headers_chapada(design_table_month, csv_data)
     
     #Data Normalization and Cleaning----------------------------------------------------------------------------------
     
@@ -60,24 +67,6 @@ for (table in table_names){
     ##You can use the below lines when setting up the design tables to check if the range limitation constants you are using are appropriate. 
     #plot <- plot_variable_chapada(normalized_data,normalized_data$air_temperature)
     #plot
-    
-    
-    #TimeStamp Handling-------------------------------------------------------------------------------------------------------
-    
-    #Format the time stamps for time stamp handling 
-    normalized_data$timestamp_local <- as.POSIXct(normalized_data$timestamp_local, tz = "America/Sao_Paulo")
-    
-    #get the time resolution of the data from the design table. 
-    resolution <- design_table$resolution %>%
-      unique()
-    
-    #compare against a time ladder and see 
-    normalized_data <- time_ladder_chapada(normalized_data,resolution, table)
-    
-    #now I want to put the timestamps back in character format to save in the CSV
-    normalized_data$timestamp_local <- format(normalized_data$timestamp_local,"%Y-%m-%d %H:%M:%S")
-    
-    
     
     #File Writing and Moving-------------------------------------------------------------------------------------------------------
     
@@ -96,13 +85,4 @@ for (table in table_names){
     file.rename(file, paste0(rawCSVDataArchive_dir, table, "/", basename(file)))
   }
 }
-
-
-
-
-
-
-
-
-
 

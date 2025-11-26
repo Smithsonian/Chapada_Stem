@@ -9,9 +9,9 @@
 invisible(lapply(list.files("functions/", pattern = "\\.R$", full.names = TRUE), source))
 
 #relevant directories
-rawData_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/0_RawData/unprocessed_data/")
-rawDataArchive_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/0_RawData/archive_data/")
-rawCSVData_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/1_RawCSVData/unprocessed/")
+rawData_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/sensor_data/0_RawData/unprocessed_data/")
+rawDataArchive_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/sensor_data/0_RawData/archive_data/")
+rawCSVData_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/sensor_data/1_RawCSVData/unprocessed/")
 
 #list files in the raw data folder to be converted. 
 files <- list.files(rawData_dir, full.names = T)%>%

@@ -27,16 +27,9 @@ write_monthly_data_chapada <- function(dt, rawCSVData_dir, filename) {
     
     #determine if any data for that month has already been processed. 
     if(!file.exists(file_path)){
-      
-      #run this function which handles the possibility of duplicate timestamps 
-      aggregated_data <- aggregate_data_chapada(dt_m)
-      
-      aggregated_data <- aggregated_data %>%
-        mutate(.TIMESTAMP_SORT = as.POSIXct(TIMESTAMP, format = "%Y-%m-%d %H:%M:%S")) %>%
-        arrange(.TIMESTAMP_SORT) %>%
-        select(-.TIMESTAMP_SORT)
 
-      write.csv(aggregated_data, file_path, row.names = FALSE)
+      #if the file does not already exist, we do not need to run duplicate removal. 
+      write.csv(dt_m, file_path, row.names = FALSE)
       
     }else{
       
