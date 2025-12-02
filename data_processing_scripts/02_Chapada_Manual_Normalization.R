@@ -14,7 +14,7 @@ invisible(lapply(list.files("functions/", pattern = "\\.R$", full.names = TRUE),
 #We only want to do this on monthly files that have ALL of their loggernet data.
 #enter in the vector below any months that may not have a complete data set yet in the format yyyy-mm
 #reccommend excluding the current month and the previous month 
-exclude_months <- c("2025-11", "2025-10")%>%
+exclude_months <- c("2025-11", "2025-12")%>%
   paste(collapse = "|")
 
 
@@ -34,7 +34,7 @@ table_names <- unique(merged_design$Table)
 
 #File Selection for Processing ---------------------------------------------------------------------------------------
 for (table in table_names){
-  paste0("\nProcessing ",table,":\n")
+  cat(paste0("\n Processing ",table,": \n"))
   
   #define all the files that are to be processed based on the table name and the excluded months. 
   files <- list.files(rawCSVData_dir, pattern = table, recursive = T, full.names = T)%>%

@@ -9,8 +9,8 @@
 invisible(lapply(list.files("functions/", pattern = "\\.R$", full.names = TRUE), source))
 
 #relevant directories
-rawData_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/sensor_data/0_RawData/unprocessed_data/")
-rawDataArchive_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/sensor_data/0_RawData/archive_data/")
+rawData_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/sensor_data/0_RawData/unprocessed_archive_data/")
+rawDataArchive_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/sensor_data/0_RawData/archive_data/") 
 rawCSVData_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/sensor_data/1_RawCSVData/unprocessed/")
 
 #list files in the raw data folder to be converted. 
@@ -28,11 +28,11 @@ for (file in files){
   #filter out any weird time stamps that are marked before 2025 (Changes on a project to project basis)
   dt <- dt %>%
     filter(year(TIMESTAMP) > 2024)
-  filename <- substr(basename(file),1,(nchar(basename(file))-4)) #will need to change the number once the renaming functions kick in. 
+  tablename <- substr(basename(file),1,(nchar(basename(file))-19)) #will need to change the number once the renaming functions kick in. 
   
   
   #Aggregate the data into monthly chunks and write them out to the correct place---------------------------------------------------------------------------
-  write_monthly_data_chapada(dt, rawCSVData_dir, filename)
+  write_monthly_data_chapada(dt, rawCSVData_dir, tablename)
   
   
   #Move the Raw Loggernet data file into the archive----------------------------------------------------------------------------------
