@@ -13,7 +13,6 @@ The Chapada-STEM automated chamber system is deployed along a soil moisture satu
 - Seasonally saturated wetlands  
 - Dry grasslands
 
-
 To capture spatial variability in the cerrado wetland gas fluxes, the system includes:
 
 - **8** chambers spanning the transition from permanently to seasonally saturated wetlands  
@@ -27,6 +26,13 @@ To capture spatial variability in the cerrado wetland gas fluxes, the system inc
     <br>
   <sub>Above are images of the chambers in the Chapada Project. There are 20 chambers total. Fluxes are measured when the lids on the chambers are closed.</sub>
 </p>
+
+<p align="center">
+<img src="https://github.com/user-attachments/assets/2d2b7e72-1959-426d-bf48-52573ecafc75" width=75%>
+<br>
+<sub> A map showing the placement of the high and low areas of the site plus zoomed in maps of the chamber placement at each level. </sub>
+</p>
+
 
 
 Each site uses a solar-powered, continuously running system connected to an LI-COR 7810 gas analyzer. A programmable manifold system controls chamber lid opening and closing, sampling cycles, logging, and sensor power management. Data are sampled once per hour, providing consistent temporal coverage across all chambers.
