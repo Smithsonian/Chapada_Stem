@@ -1,1 +1,55 @@
-placeholder
+<h1>Chapada-STEM Automated Greenhouse Gas Monitoring</h1>
+
+<p>
+The <strong>Chapada-STEM</strong> project is a collaborative research effort between the
+Cary Institute, Exeter University, and the Smithsonian Environmental Research Center (SERC).
+The project takes place in Brazil, within the <em>cerrado</em> biome—a tropical savanna ecosystem
+characterized by strong wet–dry seasonality, rich biodiversity, and a significant role in
+global carbon cycling.
+</p>
+
+<p>
+SERC is responsible for the design, operation, and oversight of the automated chamber
+measurement system. Our goal is to generate continuous, automated measurements of ecosystem
+methane (CH₄) and carbon dioxide (CO₂) fluxes using the LI-COR 7810 gas analyzer.
+The project focuses on cerrado grasslands widely distributed throughout wetland areas,
+providing high-resolution insights into greenhouse gas exchange at the soil–atmosphere interface.
+</p>
+
+<h2>Project Overview</h2>
+
+<p>The Chapada-STEM automated chamber system is deployed along a soil moisture saturation gradient representative of cerrado landscapes, including:</p>
+
+<ul>
+  <li>Permanently saturated wetlands</li>
+  <li>Seasonally saturated wetlands</li>
+  <li>Dry grasslands</li>
+</ul>
+
+<p>To capture spatial variability in the cerrado wetland gas fluxes, the system includes:</p>
+
+<ul>
+  <li>8 chambers spanning the transition from permanently to seasonally saturated wetlands</li>
+  <li>8 chambers spanning the transition from seasonally saturated wetlands to dry grasslands</li>
+  <li>2 additional chambers installed on termite mounds</li>
+</ul>
+
+<p>
+Each site uses a solar-powered, continuously running system connected to an LI-COR 7810 gas analyzer.
+A programmable manifold system controls chamber lid opening and closing, sampling cycles, logging,
+and sensor power management. Data are sampled once per hour, providing consistent temporal coverage
+across all chambers.
+</p>
+
+<h2>Data Access and Visualization</h2>
+
+<p>
+All flux data are automatically uploaded to LoggerNet, enabling remote access for monitoring
+and quality control.
+</p>
+
+<p>
+Additionally, data from all chambers are summarized daily on an interactive dashboard, which displays
+CH₄ and CO₂ fluxes for each chamber. This dashboard provides an at-a-glance view of system performance
+and environmental variability across the site.
+</p>
