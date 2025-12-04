@@ -3,6 +3,7 @@
 #It takes a while to run this on a lot of data because of the aggregation function. 
 
 library(tidyverse)
+library(data.table)
 
 
 #Load functions, directories, and unprocessed file names-------------------------------------------------------------
