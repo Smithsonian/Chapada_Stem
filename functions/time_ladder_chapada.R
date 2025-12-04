@@ -1,6 +1,5 @@
 #Function --  This function will create an array of all the times that should be present in the data set and count how many are missing. 
 #This is a check to see if we over cleaned the data. 
-library(lubridate)
 
 time_ladder_chapada <- function(dt, resolution, table) {
   #create a new data frame of timestamps from strt to end of the data that increases the time resolution of the table

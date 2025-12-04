@@ -1,9 +1,7 @@
 ## Function --  Split the unprocessed data into monthly files. for each month, check if the file already exist. If it does, append the data. 
 #If it does not, create a new file for that month. 
 #if appending, check for duplicates durring the appending process so it does not need to be done down the line 
-library(tidyverse)
-library(data.table)
-library(anytime)
+
 
 write_monthly_data_chapada <- function(dt, rawCSVData_dir, filename) {
   
