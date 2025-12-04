@@ -59,10 +59,8 @@ local({
 ```
 
 ```{r load data, echo = F}
-#set wd
-wd =  "C:/Users/lagorgal/Downloads"
 #read in files from dropbox
-dbfold <- "C:/Users/lagorgal/Smithsonian Dropbox/Lydia LaGorga/Chapada_Loggernet_Data/current_data"
+dbfold <-paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/sensor_data/0_RawData/current_data/")
 files <- list.files(dbfold, pattern = "*.dat", full.names = TRUE)
 names(files) <- gsub(".dat", "", basename(files))
 
