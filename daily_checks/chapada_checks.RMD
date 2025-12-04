@@ -60,8 +60,12 @@ local({
 
 ```{r load data, echo = F}
 #read in files from dropbox
-dbfold <-paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/sensor_data/0_RawData/current_data/")
+setwd("C:/Users/LaGorgaL.S/Documents/Chapada_Stem/daily_checks/")
+dbfold <- "C:/Users/LaGorgaL.S/Smithsonian Dropbox/Lydia LaGorga/Chapada_Stem_Data/sensor_data/0_RawData/current_data/"
 files <- list.files(dbfold, pattern = "*.dat", full.names = TRUE)
+message("files are as follows:", files)
+wd<- getwd()
+message("wd is:",wd)
 names(files) <- gsub(".dat", "", basename(files))
 
 #read into list to stay organized, format head function
