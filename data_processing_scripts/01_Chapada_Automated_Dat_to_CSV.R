@@ -2,6 +2,8 @@
 #This step is meant to be run as an automated pre-processing step before normalization.
 #It takes a while to run this on a lot of data because of the aggregation function. 
 
+library(tidyverse)
+
 
 #Load functions, directories, and unprocessed file names-------------------------------------------------------------
 

@@ -5,6 +5,11 @@
 #ensure correct time stamp formatting and add a time ladder to the data 
 #write the processed file and move the rawCSV file to an archive. 
 
+library(data.table)
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+library(anytime)
 
 #### Load Functions, Directories, and Design Tables ####
 #Load all functions 

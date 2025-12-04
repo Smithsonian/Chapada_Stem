@@ -6,8 +6,6 @@
 #csv_data = the cleaned csv dataset 
 #variable =  the variable that you would like to look at
 
-library(ggplot2)
-
 
 plot_variable_chapada <- function(dt, variable){
   

@@ -1,8 +1,7 @@
 ## Function read_datalogger_file originally sourced from COMPASS code produced by Ben Bond-Lamberty https://github.com/COMPASS-DOE/sensor-data-pipeline/blob/main/pipeline/L0-utils.R
 
 # filename <- path to the raw loggernet data file 
-library(tidyverse)
-library(dplyr)
+
 
 read_datalogger_file_chapada <- function(filename, quiet = FALSE, ...) {
   
