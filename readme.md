@@ -46,7 +46,7 @@ To capture spatial variability in the cerrado wetland gas fluxes, the system inc
 </p>
 
 <p align="center">
-<img src="images/map.jpg" width=75%>
+<img src="images/map.png" width=75%>
 <br>
 <sub> A map showing the placement of the high and low areas of the site plus zoomed in maps of the chamber placement at each level. </sub>
 </p>
