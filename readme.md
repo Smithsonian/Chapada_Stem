@@ -82,6 +82,13 @@ A [ClimaVue50 Compact Ditigal Weather Monitoring System](https://www.campbellsci
 ---
 ## Data Workflow
 
-All data are automatically uploaded to **LoggerNet**, enabling remote access for monitoring and quality control. Data from the chambers spanning permanently to seasonally saturated wetlands, as well as ClimaVue50 data, are logged on the "Chapada_Low" logger and data from the chambers spanning seasonally saturated wetlands to dry grasslands are logged on the "Chapada_High" Logger. Raw data from loggernet is funneled through the workflows above to create monthly CSV data files for the project. 
+All data are automatically uploaded to **LoggerNet**, enabling remote access for monitoring and quality control. Data from the chambers spanning permanently to seasonally saturated wetlands, as well as ClimaVue50 data, are logged on the "Chapada_Low" logger and data from the chambers spanning seasonally saturated wetlands to dry grasslands are logged on the "Chapada_High" Logger. Raw data from loggernet is funneled through the workflows found on the project GitHub to create monthly CSV data files for the project. 
+
+<p align="center">
+  <a href="https://github.com/Smithsonian/Chapada_Stem">
+    <img src="https://img.shields.io/badge/Click%20here%20to%20Visit%20the%20Chapada_stem%20GitHub-6C61BA?style=for-the-badge">
+  </a>
+</p>
+
 
 
