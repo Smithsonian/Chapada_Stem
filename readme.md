@@ -5,6 +5,14 @@
 
 ---
 
+## Data Access and Visualization
+
+LICOR data from all chambers are summarized daily on an interactive [**Online Dashboard**](https://aslewis.shinyapps.io/chapada_dashboard/), which displays CH₄ and CO₂ fluxes for each chamber. This dashboard provides an at-a-glance view of system performance and environmental variability across the site. 
+
+If you are a member of the SERC team that is monitoring the data flow from the project, view this month's data in the [R Markdown File](https://smithsonian.github.io/Chapada_Stem/daily_checks/chapada_checks.html) 
+
+
+---
 ## Project Overview
 
 The Chapada-STEM automated chamber system is deployed along a soil moisture saturation gradient representative of cerrado landscapes, including:
@@ -48,9 +56,8 @@ In addition to LICOR measurements, each chamber is outfitted with a [BME280](htt
 A [ClimaVue50 Compact Ditigal Weather Monitoring System](https://www.campbellsci.com/climavue-50?gad_source=1&gad_campaignid=23283058683&gbraid=0AAAAAD9dhHqXpp5ofHZseLgZjYhIhUKEg&gclid=CjwKCAiA3L_JBhAlEiwAlcWO5495RiTmc4fwPRYT675hk4BZ01tsDGi26Dah-PNr2MDK2Wg_qHo8RBoCsbEQAvD_BwE) is deployed on site to collect weather related data. 
 
 ---
-
-## Data Access and Visualization
+## Data Workflow
 
 All data are automatically uploaded to **LoggerNet**, enabling remote access for monitoring and quality control. Data from the chambers spanning permanently to seasonally saturated wetlands, as well as ClimaVue50 data, are logged on the "Chapada_Low" logger and data from the chambers spanning seasonally saturated wetlands to dry grasslands are logged on the "Chapada_High" Logger. Raw data from loggernet is funneled through the workflows above to create monthly CSV data files for the project. 
 
-Additionally, LICOR data from all chambers are summarized daily on an interactive dashboard, which displays CH₄ and CO₂ fluxes for each chamber. This dashboard provides an at-a-glance view of system performance and environmental variability across the site. (More information aboutt he Dashboard will be added once the dashboard has been implemented) 
+
