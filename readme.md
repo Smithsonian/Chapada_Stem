@@ -1,6 +1,6 @@
 ## Chapada-STEM Automated Greenhouse Gas Monitoring
 
-| <img src="https://github.com/user-attachments/assets/7a92d132-21ee-4f01-8c2f-c62b2304565d" width="20000"> <br> <sub>The site of the Chapada Project</sub> |  The **Chapada-STEM** project is a collaborative research effort between the Cary Institute, Exeter University, and the Smithsonian Environmental Research Center (SERC). The project takes place in Brazil, within the *cerrado* biome—a tropical savanna ecosystem characterized by strong wet–dry seasonality, rich biodiversity, and a significant role in global carbon cycling.<br><br>SERC is responsible for the design, operation, and oversight of the automated chamber measurement system. Our goal is to generate continuous, automated measurements of ecosystem methane (CH₄) and carbon dioxide (CO₂) fluxes using the LI-COR 7810 gas analyzer. The project focuses on cerrado grasslands widely distributed throughout wetland areas, providing high-resolution insights into greenhouse gas exchange at the soil–atmosphere interface.|
+| <img src="images/site.jpeg" width="20000"> <br> <sub>The site of the Chapada Project</sub> |  The **Chapada-STEM** project is a collaborative research effort between the Cary Institute, Exeter University, and the Smithsonian Environmental Research Center (SERC). The project takes place in Brazil, within the *cerrado* biome—a tropical savanna ecosystem characterized by strong wet–dry seasonality, rich biodiversity, and a significant role in global carbon cycling.<br><br>SERC is responsible for the design, operation, and oversight of the automated chamber measurement system. Our goal is to generate continuous, automated measurements of ecosystem methane (CH₄) and carbon dioxide (CO₂) fluxes using the LI-COR 7810 gas analyzer. The project focuses on cerrado grasslands widely distributed throughout wetland areas, providing high-resolution insights into greenhouse gas exchange at the soil–atmosphere interface.|
 |---|---|
 
 ---
@@ -38,15 +38,15 @@ To capture spatial variability in the cerrado wetland gas fluxes, the system inc
 - **2** additional chambers installed on termite mounds
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/9c639b34-be22-4c65-a82d-147c1a4ec13e" width="250">
-  <img src="https://github.com/user-attachments/assets/51a7e231-b314-446f-b05d-be370d1c5480" width="250">
-  <img src="https://github.com/user-attachments/assets/85469b48-e493-44fc-8a23-2c34a9c87c34" width="250">
+  <img src="images/chamber1.jpg" width="250">
+  <img src="images/chamber2.jpg" width="250">
+  <img src="images/chamber3.jpg" width="250">
     <br>
   <sub>Above are images of the chambers in the Chapada Project. There are 20 chambers total. Fluxes are measured when the lids on the chambers are closed.</sub>
 </p>
 
 <p align="center">
-<img src="https://github.com/user-attachments/assets/2d2b7e72-1959-426d-bf48-52573ecafc75" width=75%>
+<img src="images/map.jpg" width=75%>
 <br>
 <sub> A map showing the placement of the high and low areas of the site plus zoomed in maps of the chamber placement at each level. </sub>
 </p>
@@ -56,7 +56,7 @@ To capture spatial variability in the cerrado wetland gas fluxes, the system inc
 Each site uses a solar-powered, continuously running system connected to an LI-COR 7810 gas analyzer. A programmable manifold system controls chamber lid opening and closing, sampling cycles, logging, and sensor power management. Data are sampled once per hour, providing consistent temporal coverage across all chambers.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/57fca6aa-e61e-41df-b10c-e4e42ef9e571" width="50%">
+  <img src="images/manifold.jpg" width="50%">
     <br>
   <sub>The Manifold acts as the "brain" of the project, controlling opening and closing of the chambers as well as logging the data from all sensors.</sub>
 </p>
