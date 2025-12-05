@@ -1,7 +1,21 @@
 ## Chapada-STEM Automated Greenhouse Gas Monitoring
 
-| <img src="images/site.jpeg" width="50%"> <br> <sub>The site of the Chapada Project</sub> |  The **Chapada-STEM** project is a collaborative research effort between the Cary Institute, Exeter University, and the Smithsonian Environmental Research Center (SERC). The project takes place in Brazil, within the *cerrado* biome—a tropical savanna ecosystem characterized by strong wet–dry seasonality, rich biodiversity, and a significant role in global carbon cycling.<br><br>SERC is responsible for the design, operation, and oversight of the automated chamber measurement system. Our goal is to generate continuous, automated measurements of ecosystem methane (CH₄) and carbon dioxide (CO₂) fluxes using the LI-COR 7810 gas analyzer. The project focuses on cerrado grasslands widely distributed throughout wetland areas, providing high-resolution insights into greenhouse gas exchange at the soil–atmosphere interface.|
-|---|---|
+<table>
+  <tr>
+    <td align="center" style="vertical-align:top; width:40%;">
+      <img src="images/site.jpeg" width="300"><br>
+      <small>The site of the Chapada Project</small>
+    </td>
+    <td style="vertical-align:top; width:60%;">
+      <p>
+        The <b>Chapada-STEM</b> project is a collaborative research effort between the Cary Institute, Exeter University, and the Smithsonian Environmental Research Center (SERC). The project takes place in Brazil, within the <i>cerrado</i> biome—a tropical savanna ecosystem characterized by strong wet–dry seasonality, rich biodiversity, and a significant role in global carbon cycling.
+      </p>
+      <p>
+        SERC is responsible for the design, operation, and oversight of the automated chamber measurement system. Our goal is to generate continuous, automated measurements of ecosystem methane (CH₄) and carbon dioxide (CO₂) fluxes using the LI-COR 7810 gas analyzer. The project focuses on cerrado grasslands widely distributed throughout wetland areas, providing high-resolution insights into greenhouse gas exchange at the soil–atmosphere interface.
+      </p>
+    </td>
+  </tr>
+</table>
 
 ---
 
