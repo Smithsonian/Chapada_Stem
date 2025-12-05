@@ -1,7 +1,7 @@
 ## Function read_datalogger_file originally sourced from COMPASS code produced by Ben Bond-Lamberty https://github.com/COMPASS-DOE/sensor-data-pipeline/blob/main/pipeline/L0-utils.R
 
 # filename <- path to the raw loggernet data file 
-library(tidyverse)
+
 
 read_datalogger_file_chapada <- function(filename, quiet = FALSE, ...) {
   
@@ -17,9 +17,9 @@ read_datalogger_file_chapada <- function(filename, quiet = FALSE, ...) {
   if(length(list(...))) {
     x <- read_csv(I(dat[-c(1, 3, 4)]), ...)
   } else {
-    x <- read_csv(I(dat[-c(1, 3, 4)]),
-                  # don't want timestamp parsed to a datetime at this point
-                  col_types = list(TIMESTAMP = col_character()))
+    x <- read_csv(I(dat[-c(1, 3, 4)]), show_col_types = FALSE)%>%
+      #This ensures that ALL variables interpreted as timestamps are read in as characters. 
+      mutate(across(where(lubridate::is.POSIXt), as.character))
   }
   info <- tibble(Logger = rep(logger_name, nrow(x)),
                  Table = rep(table_name, nrow(x)),

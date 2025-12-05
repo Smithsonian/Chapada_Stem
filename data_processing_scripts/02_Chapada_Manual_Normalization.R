@@ -1,25 +1,34 @@
-#### Step 2 -- Normalization and Automatic Range Clean #### 
+#### Step 2 -- Normalization and Range Clean #### 
 #Description -- 
-#Clean the data in each table based on a low and high limit (data range)
 #Put the data in long format using the design table (normalize it)
-#ensure correct time stamp formatting 
+#Clean the data in each table based on a low and high limit (data range)
+#ensure correct time stamp formatting and add a time ladder to the data 
+#write the processed file and move the rawCSV file to an archive. 
 
-####------------------Required User Input-------------------------------------#####
-#We only want to do this on monthly files that have ALL of their loggernet data.
-#enter in the vector below any months that may not have a complete data set yet in the format yyyy-mm
-#reccommend excluding the current month and the previous month 
-exclude_months <- c("2025-11", "2025-10")%>%
-  paste(collapse = "|")
-#------------------- End Required user input --------------------------------------#
+library(data.table)
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+library(anytime)
 
 #### Load Functions, Directories, and Design Tables ####
 #Load all functions 
 invisible(lapply(list.files("functions/", pattern = "\\.R$", full.names = TRUE), source))
 
+#Required User Input-------------------------------------------------------------------------------------------------
+#We only want to do this on monthly files that have ALL of their loggernet data.
+#enter in the vector below any months that may not have a complete data set yet in the format yyyy-mm
+#reccommend excluding the current month and the previous month 
+exclude_months <- c("2025-11", "2025-12")%>%
+  paste(collapse = "|")
+
+
+#Load directories and Design Table ---------------------------------------------------------------------------------
+
 #relevant directories
-rawCSVData_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/1_RawCSVData/unprocessed/")
-rawCSVDataArchive_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/1_RawCSVData/processed/")
-L0_NormalizedData_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/2_L0_NormalizedData/")
+rawCSVData_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/sensor_data/1_RawCSVData/unprocessed/")
+rawCSVDataArchive_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/sensor_data/1_RawCSVData/processed/")
+L0_NormalizedData_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/sensor_data/2_L0_NormalizedData/")
 
 #design table 
 merged_design <- load_design_table()
@@ -28,38 +37,43 @@ table_names <- unique(merged_design$Table)
 
 
 
-#### Normalization Steps -- done one table and one monthly file at a time ####
+#File Selection for Processing ---------------------------------------------------------------------------------------
 for (table in table_names){
+  cat(paste0("\n Processing ",table,": \n"))
   
-  #filter the design table to just the specific loggernet table we are working with and get the cr1000_names
-  design_table <- filter(merged_design, Table == table)
-  headers <- design_table$cr1000_name
   #define all the files that are to be processed based on the table name and the excluded months. 
   files <- list.files(rawCSVData_dir, pattern = table, recursive = T, full.names = T)%>%
     str_subset(pattern = exclude_months, negate = TRUE)
   
+  #filter the design table to just the specific loggernet table we are working with and get the cr1000_names
+  design_table <- filter(merged_design, Table == table)
+  
   for (file in files){ 
+    
+    
+    
     #get the CSV file associated with that table and change headers to cr1000 names. 
     csv_data <- read.csv(file) %>%
       select(-Table, -Format)
-    colnames(csv_data) <-headers
+    
+    #filter the design table to only include the variables that are active during this month. 
+    design_table_month <- filter_to_active_variables_chapada(csv_data, design_table)
+  
+    #change the loggernet headers to the cr1000 names given in the design table. 
+    csv_data <- convert_loggernet_headers_chapada(design_table_month, csv_data)
+    
+    #Data Normalization and Cleaning----------------------------------------------------------------------------------
     
     #Normalize the data. this function spits out warnings and I can't figure out how to fix it. It does not affect the data. I tested every which way. 
     normalized_data <- normalize_loggernet_csv_data_chapada(csv_data, design_table, data_dir)
     #Apply range limitation cleaning for variables that have been marked with a range 
     normalized_data <- apply_range_limitation_chapada(design_table, normalized_data)
-    #Format the timestamps and remove points with weird timestamps 
-    normalized_data$timestamp_local <- as.POSIXct(normalized_data$timestamp_local)
-    
+
     ##You can use the below lines when setting up the design tables to check if the range limitation constants you are using are appropriate. 
-    #plot <- plot_variable_chapada(normalized_data,normalized_data$barometric_pressure)
+    #plot <- plot_variable_chapada(normalized_data,normalized_data$air_temperature)
     #plot
     
-    #### Timestamp Handling ####
-    #This section will do a time ladder comparison on the data to make sure not too many data points were removed 
-    #and handle all the timestamp formatting stuff. 
-    
-    
+    #File Writing and Moving-------------------------------------------------------------------------------------------------------
     
     #write the normalized file out int he correct folder. 
     if (!dir.exists(paste0(L0_NormalizedData_dir,table,"/"))){
@@ -76,13 +90,4 @@ for (table in table_names){
     file.rename(file, paste0(rawCSVDataArchive_dir, table, "/", basename(file)))
   }
 }
-
-
-
-
-
-
-
-
-
 

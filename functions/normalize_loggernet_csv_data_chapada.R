@@ -8,10 +8,6 @@
 #csv_dir  --  the directory to the raw loggernet data in csv format 
 
 
-
-library(data.table)
-library(tidyverse)
-
 normalize_loggernet_csv_data_chapada <- function(csv_data, design_table, data_dir) {
   
   #identify the non-chamber level variables to leave out of the normalization
