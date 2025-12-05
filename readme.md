@@ -7,9 +7,19 @@
 
 ## Data Access and Visualization
 
-LICOR data from all chambers are summarized daily on an interactive [**Online Dashboard**](https://aslewis.shinyapps.io/chapada_dashboard/), which displays CH₄ and CO₂ fluxes for each chamber. This dashboard provides an at-a-glance view of system performance and environmental variability across the site. 
+LICOR data from all chambers are summarized daily on an interactive **Online Dashboard**, which displays CH₄ and CO₂ fluxes for each chamber. This dashboard provides an at-a-glance view of system performance and environmental variability across the site.  
 
-If you are a member of the SERC team that is monitoring the data flow from the project, view this month's data in the [R Markdown File](https://smithsonian.github.io/Chapada_Stem/daily_checks/chapada_checks.html) 
+If you are a member of the SERC team that is monitoring the data flow from the project, you can view the raw data flow collected so far this month in the **R Markdown File**.  
+
+<p align="center">
+  <a href="https://aslewis.shinyapps.io/chapada_dashboard/">
+    <img src="https://img.shields.io/badge/Click%20here%20to%20view%20the%20Online%20Dashboard-6C61BA?style=for-the-badge">
+  </a>
+  &nbsp;&nbsp;&nbsp;
+  <a href="https://smithsonian.github.io/Chapada_Stem/daily_checks/chapada_checks.html">
+    <img src="https://img.shields.io/badge/Click%20here%20to%20view%20today's%20R%20Markdown-6C61BA?style=for-the-badge">
+  </a>
+</p>
 
 
 ---
