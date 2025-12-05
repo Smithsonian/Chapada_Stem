@@ -67,7 +67,7 @@ To capture spatial variability in the cerrado wetland gas fluxes, the system inc
 
 
 
-Each site uses a solar-powered, continuously running system connected to an LI-COR 7810 gas analyzer. A programmable manifold system controls chamber lid opening and closing, sampling cycles, logging, and sensor power management. Data are sampled once per hour, providing consistent temporal coverage across all chambers.
+Each site uses a solar-powered, continuously running system connected to an [LI-COR 7810](https://www.licor.com/products/trace-gas/LI-7810) gas analyzer. A programmable manifold system controls chamber lid opening and closing, sampling cycles, logging, and sensor power management. Data are sampled once per hour, providing consistent temporal coverage across all chambers.
 
 <p align="center">
   <img src="images/manifold.jpg" width="50%">
