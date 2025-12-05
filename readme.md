@@ -2,11 +2,11 @@
 
 <table>
   <tr>
-    <td align="center" style="vertical-align:top; width:40%;">
-      <img src="images/site.jpeg" width="300"><br>
-      <small>The site of the Chapada Project</small>
+    <td align="center" style="vertical-align:center; width:50%;">
+      <img src="images/site.jpeg" width="400"><br>
+      <sub>The site of the Chapada Project</sub>
     </td>
-    <td style="vertical-align:top; width:60%;">
+    <td style="vertical-align:center; width:50%;">
       <p>
         The <b>Chapada-STEM</b> project is a collaborative research effort between the Cary Institute, Exeter University, and the Smithsonian Environmental Research Center (SERC). The project takes place in Brazil, within the <i>cerrado</i> biome—a tropical savanna ecosystem characterized by strong wet–dry seasonality, rich biodiversity, and a significant role in global carbon cycling.
       </p>
