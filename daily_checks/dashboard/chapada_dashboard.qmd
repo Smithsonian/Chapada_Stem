@@ -41,16 +41,14 @@ chamber_levels = c("20 (Relatively drier)",  "30 (Relatively drier)",
                    "50 (Relatively drier)",  "60 (Relatively wetter)", 
                    "70 (Relatively wetter)")
 
-color.gradient=case_when(grepl("drier", chamber_levels)~"#E4D966",
-                         grepl("wetter", chamber_levels)~"#779B3E",
-                         grepl("Termites", chamber_levels)~"#673A0A")
+color.vals=c("#F29559", "#F2B576","#F2D492", "#C1BE7E","#888F5C", "#4E603A", "#1F3829")
+color.gradient <- colorRampPalette(color.vals)(9)
 
 #For testing
 input <- list()
 input$today <- Sys.Date()
 input$days_to_plot <- 10
 input$daily <- "Hourly"
-input$chambers <- c(10,20,30,40,50,60,70,80)
 ```
 
 ::: {.row}
@@ -78,12 +76,6 @@ radioButtons(
       choices  = c("Hourly", "Daily mean"), 
       selected = "Hourly"
     )
-br()
-checkboxGroupInput(
-    'chambers', 'Chambers to plot', 
-    choices = as.character(seq(10, 90, 10)),
-    selected = as.character(seq(10, 90, 10))
-  )
 ```
 
 ::: 
@@ -96,42 +88,42 @@ checkboxGroupInput(
 
 ```{r}
 #| panel: fill
-plotlyOutput('plot_flux', height = 500)
+plotlyOutput('plot_flux', height = 420)
 ```
 
 ## Partitioned CO~2~
 
 ```{r}
 #| panel: fill
-plotlyOutput('plot_part', height = 500)
+plotlyOutput('plot_part', height = 420)
 ```
 
 ## Met
 
 ```{r}
 #| panel: fill
-plotlyOutput('plot_met', height = 500)
+plotlyOutput('plot_met', height = 420)
 ```
 
 ## Redox
 
 ```{r}
 #| panel: fill
-plotlyOutput('plot_redox', height = 500)
+plotlyOutput('plot_redox', height = 420)
 ```
 
 ## Teros
 
 ```{r}
 #| panel: fill
-plotlyOutput('plot_teros', height = 500)
+plotlyOutput('plot_teros', height = 420)
 ```
 
 ## BME
 
 ```{r}
 #| panel: fill
-plotlyOutput('plot_bme', height = 500)
+plotlyOutput('plot_bme', height = 420)
 ```
 
 :::
@@ -190,9 +182,9 @@ output$plot_flux <- renderPlotly({
   
   p1 <- slopes_recent2 %>%
     mutate(R2 = round(R2, 2)) %>%
-    filter(#gas %in% input$gases,
-           chamber %in% input$chambers) %>%
-    ggplot(aes(x = TIMESTAMP, y = slope, color = type,
+    filter(#gas %in% input$gases
+      ) %>%
+    ggplot(aes(x = TIMESTAMP, y = slope, color = chamber,
                group = chamber, label = R2)) +
     geom_hline(yintercept = 0, color = "grey70") +
     geom_point(size = 0.5) +
@@ -200,10 +192,7 @@ output$plot_flux <- renderPlotly({
     facet_grid(gas~location, scales = "free_y") +
     scale_x_datetime(date_labels = "%b %d") +
     theme_bw()+
-    scale_color_manual(values = c("#E4D966", "#779B3E", "#673A0A"),
-                       breaks = c("Relatively drier", 
-                                  "Relatively wetter", 
-                                  "Termites"),
+    scale_color_manual(values = color.gradient,
                        name = "")+
     theme(axis.title.x = element_blank(),
           axis.text.x = element_text(angle = 30, vjust = 1.0, hjust = 1.0))
@@ -252,8 +241,8 @@ output$plot_part <- renderPlotly({
   
   p1 <- slopes_part_recent2 %>%
     filter(#gas %in% input$gases_part,
-           chamber %in% input$chambers) %>%
-    ggplot(aes(x = DateTime, y = value, color = type,
+           ) %>%
+    ggplot(aes(x = DateTime, y = value, color = chamber,
                group = chamber)) +
     geom_hline(yintercept = 0, color = "grey70") +
     geom_point(size = 0.5) +
@@ -261,10 +250,7 @@ output$plot_part <- renderPlotly({
     facet_grid(gas~location, scales = "free_y") +
     scale_x_datetime(date_labels = "%b %d") +
     theme_bw()+
-    scale_color_manual(values = c("#E4D966", "#779B3E", "#673A0A"),
-                       breaks = c("Relatively drier", 
-                                  "Relatively wetter", 
-                                  "Termites"),
+    scale_color_manual(values = color.gradient,,
                        name = "")+
     theme(axis.title.x = element_blank(),
           axis.text.x = element_text(angle = 30, vjust = 1.0, hjust = 1.0))
@@ -321,8 +307,7 @@ redox <- read_csv("https://raw.githubusercontent.com/abbylewis/Chapada_flux_data
 output$plot_redox <- renderPlotly({
   redox_recent <- redox %>%
     filter(as.Date(TIMESTAMP) <= input$today,
-           TIMESTAMP > (input$today - days(input$days_to_plot)),
-           paste0(chamber*10) %in% input$chambers) %>%
+           TIMESTAMP > (input$today - days(input$days_to_plot))) %>%
     mutate(chamber = chamber*10,
            type = case_when(chamber == 90~"Termites", 
                             chamber %in% c(10,20,30) &
@@ -351,7 +336,7 @@ output$plot_redox <- renderPlotly({
   p1 <- redox_recent2 %>%
     mutate(#depth = factor(depth, levels = c("5cm", "15cm")),
            chamber = factor(chamber)) %>%
-    ggplot(aes(x = TIMESTAMP, y = value, color = type)) +
+    ggplot(aes(x = TIMESTAMP, y = value, color = chamber)) +
     geom_hline(yintercept = 0, color = "grey70") +
     geom_point(size = 0.5) +
     geom_line(aes(group = paste0(chamber, ref, depth))) +
@@ -359,10 +344,7 @@ output$plot_redox <- renderPlotly({
     scale_x_datetime(date_labels = "%b %d") +
     theme_bw()+
     ylab("Redox sensor reading")+
-    scale_color_manual(values = c("#E4D966", "#779B3E", "#673A0A"),
-                       breaks = c("Relatively drier", 
-                                  "Relatively wetter", 
-                                  "Termites"),
+    scale_color_manual(values = color.gradient,,
                        name = "")+
     theme(axis.title.x = element_blank(),
           axis.text.x = element_text(angle = 30, vjust = 1.0, hjust = 1.0))
@@ -378,8 +360,7 @@ teros <- read_csv("https://raw.githubusercontent.com/abbylewis/Chapada_flux_data
 output$plot_teros <- renderPlotly({
   teros_recent <- teros %>%
     filter(as.Date(TIMESTAMP) <= input$today,
-           TIMESTAMP > (input$today - days(input$days_to_plot)),
-           paste0(chamber*10) %in% input$chambers) %>%
+           TIMESTAMP > (input$today - days(input$days_to_plot))) %>%
     mutate(chamber = chamber*10,
            type = case_when(chamber == 90~"Termites", 
                             chamber %in% c(10,20,30) &
@@ -404,17 +385,15 @@ output$plot_teros <- renderPlotly({
   
   p1 <- teros_recent2 %>%
     mutate(chamber = factor(chamber)) %>%
-    ggplot(aes(x = TIMESTAMP, y = value, color = type, text = paste("Chamber:", chamber))) +
+    ggplot(aes(x = TIMESTAMP, y = value, color = chamber, 
+               text = paste("Chamber:", chamber))) +
     geom_point(size = 0.5) +
     geom_line(aes(group = paste0(chamber, var))) +
     facet_grid(var~location, scales = "free_y") +
     scale_x_datetime(date_labels = "%b %d") +
     theme_bw()+
     ylab("value")+
-    scale_color_manual(values = c("#E4D966", "#779B3E", "#673A0A"),
-                       breaks = c("Relatively drier", 
-                                  "Relatively wetter", 
-                                  "Termites"),
+    scale_color_manual(values = color.gradient,
                        name = "")+
     theme(axis.title.x = element_blank(),
           axis.text.x = element_text(angle = 30, vjust = 1.0, hjust = 1.0))
@@ -430,8 +409,7 @@ bme <- read_csv("https://raw.githubusercontent.com/abbylewis/Chapada_flux_data/r
 output$plot_bme <- renderPlotly({
   bme_recent <- bme %>%
     filter(as.Date(TIMESTAMP) <= input$today,
-           TIMESTAMP > (input$today - days(input$days_to_plot)),
-           paste0(chamber*10) %in% input$chambers) %>%
+           TIMESTAMP > (input$today - days(input$days_to_plot))) %>%
     mutate(chamber = chamber*10,
            type = case_when(chamber == 90~"Termites", 
                             chamber %in% c(10,20,30) &
@@ -456,20 +434,28 @@ output$plot_bme <- renderPlotly({
   
   p1 <- bme_recent2 %>%
     mutate(chamber = factor(chamber)) %>%
-    ggplot(aes(x = TIMESTAMP, y = value, color = type, text = paste("Chamber:", chamber))) +
+    ggplot(aes(x = TIMESTAMP, y = value, color = chamber, text = paste("Chamber:", chamber))) +
     geom_point(size = 0.5) +
     geom_line(aes(group = paste0(chamber, research_name))) +
     facet_grid(research_name~location, scales = "free_y") +
     scale_x_datetime(date_labels = "%b %d") +
     theme_bw()+
     ylab("value")+
-    scale_color_manual(values = c("#E4D966", "#779B3E", "#673A0A"),
-                       breaks = c("Relatively drier", 
-                                  "Relatively wetter", 
-                                  "Termites"),
+    scale_color_manual(values = color.gradient,
                        name = "")+
     theme(axis.title.x = element_blank(),
           axis.text.x = element_text(angle = 30, vjust = 1.0, hjust = 1.0))
   plotly::ggplotly(p1, tooltip=c("TIMESTAMP", "value", "text"))
 })
 ```
+
+<footer style="
+  background-color: #f2f2f2;
+  padding: 1.2em 0;
+  margin-top: 2em;
+  text-align: center;
+  color: #444;
+  font-size: 0.9rem;
+">
+Funding for this project was provided by the United States National Science Foundation under Award # 2341407
+</footer>
