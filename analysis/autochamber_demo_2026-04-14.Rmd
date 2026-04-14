@@ -1,0 +1,76 @@
+---
+title: "Chapada data analysis"
+author: "Abby Lewis"
+date: "2026-04-14"
+output: html_document
+---
+
+Demo of a few functions from the autochamber R package I created to help process raw flux data.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Load packages
+library(tidyverse)
+
+# install.packages("remotes")
+remotes::install_github("abbylewis/autochamber")
+library(autochamber)
+```
+
+## Load flux file(s)
+
+```{r}
+FILEPATHS <- c("filepath1.dat","filepath2.dat")
+
+# Load data
+data <- load_loggernet_flux_data(FILEPATHS,
+                                 format = "Chapada")
+```
+
+## Clean and visualize
+
+```{r}
+# Add grouping variable and change columns
+to_plot_raw <- generate_recent_raw(
+  data,
+  group_cols = "location",
+  today = lubridate::as_date(max(data$TIMESTAMP)),
+  days = 2)
+
+# Visualize
+plot_raw_data(to_plot_raw[1:500, ],
+              cutoff_start = 180,
+              cutoff_end = 680,
+              group_cols = "location")
+```
+
+## Calculate fluxes
+
+```{r}
+# Calculate flux
+fluxes <- calculate_flux(data,
+                         cutoff_start = 180,
+                         cutoff_end = 680,
+                         group_cols = "location")
+```
+
+## Remove questionable data
+
+```{r}
+# There are some funky data in here- remove weird timestamps
+fluxes <- fluxes %>%
+  filter(year(TIMESTAMP) > 2000)
+
+# Add maintenance log
+with_maint_log <- add_maintenance_log(
+  fluxes,
+  gs_url = "https://docs.google.com/spreadsheets/d/103PpjEmjLAQkov9ywjA5KxyJiIP3nEWy7V8gWVZhd1M/edit?gid=0#gid=0")
+```
+
+## Visualize
+
+```{r}
+plot_calculated_fluxes(with_maint_log,
+                       group_cols = "location")
+```
