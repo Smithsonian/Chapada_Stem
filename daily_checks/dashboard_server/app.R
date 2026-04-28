@@ -4,7 +4,7 @@ library(plotly)
 
 ui <- fixedPage(
   div(class = "quarto-title-banner",
-      h1(class = "title", "Chapada Stem Data Dashboard")
+      h1(class = "title", "ChapadaSTEM Data Dashboard")
   ),
   tags$head(
     tags$style(HTML("
