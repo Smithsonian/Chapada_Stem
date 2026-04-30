@@ -30,7 +30,11 @@ for (file in files){
   #filter out any weird time stamps that are marked before 2025 (Changes on a project to project basis)
   dt <- dt %>%
     filter(year(TIMESTAMP) > 2024)
-  tablename <- substr(basename(file),1,(nchar(basename(file))-19)) #will need to change the number once the renaming functions kick in. 
+  
+  #Make sure timestamps are stored properly
+  dt$TIMESTAMP <- as.character(format(as.POSIXct(dt$TIMESTAMP, format = "%Y-%m-%d %H:%M:%S"), format = "%Y-%m-%d %H:%M:%S"))
+  
+  tablename <- substr(basename(file),1,(nchar(basename(file))-19)) 
   
   
   #Aggregate the data into monthly chunks and write them out to the correct place---------------------------------------------------------------------------
