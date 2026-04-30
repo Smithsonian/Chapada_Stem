@@ -8,7 +8,7 @@ library(data.table)
 #Load functions, directories, and unprocessed file names-------------------------------------------------------------
 
 #Load all functions 
-invisible(lapply(list.files("functions/", pattern = "\\.R$", full.names = TRUE), source))
+invisible(lapply(list.files(Sys.getenv("github_functions"), pattern = "\\.R$", full.names = TRUE), source))
 
 #relevant directories
 rawData_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/sensor_data/0_RawData/unprocessed_archive_data/")
