@@ -32,6 +32,7 @@ for (file in files){
     filter(year(TIMESTAMP) > 2024)
   
   #Make sure timestamps are stored properly
+  dt$TIMESTAMP <- ifelse(nchar(dt$TIMESTAMP) == 10, paste0(dt$TIMESTAMP, " 00:00:00"), dt$TIMESTAMP)
   dt$TIMESTAMP <- as.character(format(as.POSIXct(dt$TIMESTAMP, format = "%Y-%m-%d %H:%M:%S"), format = "%Y-%m-%d %H:%M:%S"))
   
   tablename <- substr(basename(file),1,(nchar(basename(file))-19)) 
