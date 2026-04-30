@@ -10,11 +10,15 @@ convert_loggernet_headers_chapada <- function(design_table_limited, dt){
                                    gsub("[()]", ".", design_table_limited$loggernet_variable))
   actual_current_headers <- colnames(dt)
   
-  if (identical(actual_current_headers,expected_current_headers)){
-    colnames(dt) <-new_headers
-  } else {
+  header_test <- match(actual_current_headers, expected_current_headers)
+  
+  ordered_new_headers <- new_headers[match(actual_current_headers, expected_current_headers)]
+  
+  if (anyNA(header_test)){
     stop("Design table loggernet variables do not match the variables in the file.
              Please check variable date ranges, names, and order for accuracy.")
+  } else {
+    colnames(dt) <-ordered_new_headers
   }
   
   return(dt)
