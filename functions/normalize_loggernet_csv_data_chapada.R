@@ -22,6 +22,7 @@ normalize_loggernet_csv_data_chapada <- function(csv_data, design_table, data_di
     pull(cr1000_name)
   
   if (length(non_id_cols) > 0){
+    
   
   #normalize the data. See below comments for specific steps. 
   normalized_data <- csv_data %>%
@@ -42,7 +43,7 @@ normalize_loggernet_csv_data_chapada <- function(csv_data, design_table, data_di
   
   # final step: get the research names for the ID cols from above and rename them in the final table. 
   research_ID_names <- design_table%>%
-    filter(cr1000_name == id_cols)
+    filter(cr1000_name %in% id_cols)
   
   setnames(normalized_data, old  = research_ID_names$cr1000_name, new = research_ID_names$research_name)
   
