@@ -10,9 +10,9 @@ library(tidyverse)
 load_design_table <- function() {
   
   ##Load in the design tables 
-  plotnames <- read.csv("design_tables/plotnames.csv")
-  varnames <- read.csv("design_tables/design-type.csv")
-  design <- read.csv("design_tables/design.csv")
+  plotnames <- fread("design_tables/plotnames.csv")
+  varnames <- fread("design_tables/design-type.csv")
+  design <- fread("design_tables/design.csv")
   
   
   #the experimental design is organized into three documents. The first step is to merge them to one table. 
