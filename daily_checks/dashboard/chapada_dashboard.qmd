@@ -126,6 +126,45 @@ plotlyOutput('plot_teros', height = 420)
 plotlyOutput('plot_bme', height = 420)
 ```
 
+## Raw data
+
+```{r}
+#| panel: fill
+splitLayout(
+  cellWidths = c("50%", "50%"),
+  selectInput("raw_date", "Date",
+    choices = as_date((Sys.Date() - days(7)):Sys.Date()),
+    selected = Sys.Date()
+  ),
+  sliderInput("time_hour", "Hour",
+    min = 0, max = 23, value = 5
+  )
+)
+
+plotlyOutput("plot_time", height = 420)
+
+br()
+
+p("Alternatively, visualize all fluxes from a chamber for this date:")
+
+splitLayout(
+  cellWidths = c("50%", "50%"),
+  selectInput("raw_chamber", "Chamber",
+    choices = 1:9*10
+  )
+)
+
+plotlyOutput("plot_raw_low", height = 420)
+plotlyOutput("plot_raw_high", height = 420)
+```
+
+## Errors
+
+```{r}
+#| panel: fill
+plotlyOutput('plot_errors', height = 420)
+```
+
 :::
 
 :::
@@ -149,6 +188,7 @@ slopes_l0 <- read_csv("https://raw.githubusercontent.com/abbylewis/Chapada_flux_
                           ),
          chamber_long = paste0(chamber, " (", type, ")"),
          chamber = as.factor(chamber)) %>%
+  select(-CH4_slope_ppm_per_day_ebullition) %>%
   pivot_longer(matches("CH4_|CO2_"), 
                names_to = c("gas", ".value"), 
                names_sep="_" ) %>%
@@ -185,7 +225,7 @@ output$plot_flux <- renderPlotly({
     filter(#gas %in% input$gases
       ) %>%
     ggplot(aes(x = TIMESTAMP, y = slope, color = chamber,
-               group = chamber, label = R2)) +
+               label = R2)) +
     geom_hline(yintercept = 0, color = "grey70") +
     geom_point(size = 0.5) +
     geom_line() +
@@ -250,7 +290,7 @@ output$plot_part <- renderPlotly({
     facet_grid(gas~location, scales = "free_y") +
     scale_x_datetime(date_labels = "%b %d") +
     theme_bw()+
-    scale_color_manual(values = color.gradient,,
+    scale_color_manual(values = color.gradient,
                        name = "")+
     theme(axis.title.x = element_blank(),
           axis.text.x = element_text(angle = 30, vjust = 1.0, hjust = 1.0))
@@ -446,6 +486,274 @@ output$plot_bme <- renderPlotly({
     theme(axis.title.x = element_blank(),
           axis.text.x = element_text(angle = 30, vjust = 1.0, hjust = 1.0))
   plotly::ggplotly(p1, tooltip=c("TIMESTAMP", "value", "text"))
+})
+
+################ Raw data ####################
+raw <- read_csv("https://raw.githubusercontent.com/abbylewis/Chapada_flux_data/refs/heads/master/processed_data/raw_for_dashboard.csv")  %>%
+  mutate(TIMESTAMP = lubridate::force_tz(TIMESTAMP, tzone = "Etc/GMT-3"),
+         type = case_when(Chamber == 90~"Termites", 
+                          Chamber %in% c(10,20,30) &
+                            location == "low" ~ "Relatively drier",
+                          Chamber %in% c(10,20,30,40,50) &
+                            location == "high" ~ "Relatively drier",
+                          .default = "Relatively wetter"
+                          ),
+         chamber_long = paste0(Chamber, " (", type, ")"),
+         Chamber = as.factor(Chamber))
+
+updateSelectInput(
+  inputId = "raw_date",
+  label = "Date",
+  choices = as_date((Sys.Date() - days(7)):Sys.Date()),
+  selected = Sys.Date()
+)
+
+output$plot_raw_low <- renderPlotly({
+  raw_plot <- raw %>%
+    filter(
+      as_date(TIMESTAMP) == input$raw_date,
+      Chamber == input$raw_chamber,
+      location =="low"
+    ) %>%
+    pivot_longer(matches("CO2d_ppm|CH4d_ppm"),
+      names_to = "gas"
+    ) %>%
+    mutate(
+      gas = case_match(gas,
+        "CH4d_ppm" ~ "CH₄",
+        "CO2d_ppm" ~ "CO₂",
+        .default = gas
+      ),
+      Chamber = factor(Chamber)
+    ) %>%
+    group_by(group, location) %>%
+    mutate(label = paste0(format(min(TIMESTAMP), "%H:%M:%S")))
+
+  start_cutoff <- 180 # Buffer of time after flux window
+  end_cutoff <- 680
+
+  p1 <- raw_plot %>%
+    mutate(used = ifelse(Manifold_Timer >= start_cutoff &
+      Manifold_Timer <= end_cutoff,
+    "yes",
+    "no"
+    )) %>%
+    ggplot(aes(
+      x = TIMESTAMP, y = value,
+      alpha = used, shape = used,
+      color = Chamber
+    )) +
+    geom_point(size = .9) +
+    scale_alpha_manual(
+      values = c(1, 0.1),
+      breaks = c("yes", "no")
+    ) +
+    scale_color_manual(
+      values = color.gradient
+    ) +
+    scale_shape_manual(
+      values = c(21, 19),
+      breaks = c("no", "yes")
+    ) +
+    ylab("Value") +
+    facet_grid(gas ~ label, scales = "free") +
+    theme_bw() +
+    theme(
+      axis.title.x = element_blank(),
+      axis.text.x = element_text(angle = 30, vjust = 1.0, hjust = 1.0),
+      legend.position = "none",
+      strip.background = element_rect(fill = "grey95", color = "grey")
+    ) +
+    ggtitle("CH")
+
+  plotly::ggplotly(p1, tooltip = c("TIMESTEP", "value"))
+})
+
+output$plot_raw_high <- renderPlotly({
+  raw_plot <- raw %>%
+    filter(
+      as_date(TIMESTAMP) == input$raw_date,
+      Chamber == input$raw_chamber,
+      location =="high"
+    ) %>%
+    pivot_longer(matches("CO2d_ppm|CH4d_ppm"),
+      names_to = "gas"
+    ) %>%
+    mutate(
+      gas = case_match(gas,
+        "CH4d_ppm" ~ "CH₄",
+        "CO2d_ppm" ~ "CO₂",
+        .default = gas
+      ),
+      Chamber = factor(Chamber)
+    ) %>%
+    group_by(group, location) %>%
+    mutate(label = paste0(format(min(TIMESTAMP), "%H:%M:%S")))
+
+  start_cutoff <- 180 # Buffer of time after flux window
+  end_cutoff <- 680
+
+  p1 <- raw_plot %>%
+    mutate(used = ifelse(Manifold_Timer >= start_cutoff &
+      Manifold_Timer <= end_cutoff,
+    "yes",
+    "no"
+    )) %>%
+    ggplot(aes(
+      x = TIMESTAMP, y = value,
+      alpha = used, shape = used,
+      color = Chamber
+    )) +
+    geom_point(size = .9) +
+    scale_alpha_manual(
+      values = c(1, 0.1),
+      breaks = c("yes", "no")
+    ) +
+    scale_color_manual(
+      values = color.gradient
+    ) +
+    scale_shape_manual(
+      values = c(21, 19),
+      breaks = c("no", "yes")
+    ) +
+    ylab("Value") +
+    facet_grid(gas ~ label, scales = "free") +
+    theme_bw() +
+    theme(
+      axis.title.x = element_blank(),
+      axis.text.x = element_text(angle = 30, vjust = 1.0, hjust = 1.0),
+      legend.position = "none",
+      strip.background = element_rect(fill = "grey95", color = "grey")
+    ) +
+    ggtitle("CH")
+
+  plotly::ggplotly(p1, tooltip = c("TIMESTEP", "value"))
+})
+
+output$plot_time <- renderPlotly({
+  raw_plot <- raw %>%
+    pivot_longer(matches("CH4d_ppm|CO2d_ppm"),
+      names_to = "gas"
+    ) %>%
+    mutate(
+      gas = case_match(gas,
+        "CH4d_ppm" ~ "CH₄",
+        "CO2d_ppm" ~ "CO₂",
+        .default = gas
+      ),
+      Chamber = factor(Chamber)
+    ) %>%
+    group_by(group) %>%
+    mutate(label = format(min(TIMESTAMP), "%H:%M:%S"))
+
+  start_cutoff <- 180 # Buffer of time after flux window
+  end_cutoff <- 680
+
+  raw_plot2 <- raw_plot %>%
+    filter(
+      as_date(TIMESTAMP) == input$raw_date,
+      hour(TIMESTAMP) == as.numeric(input$time_hour)
+    )
+
+  p1 <- raw_plot2 %>%
+    mutate(used = ifelse(Manifold_Timer >= start_cutoff &
+      Manifold_Timer <= end_cutoff,
+    "yes",
+    "no"
+    )) %>%
+    ungroup() %>%
+    mutate(
+      min_TS = min(TIMESTAMP),
+      secs = as.numeric(difftime(TIMESTAMP, min_TS, units = "secs"))
+    ) %>%
+    ggplot(aes(
+      x = secs, y = value,
+      alpha = used, shape = used,
+      color = Chamber
+    )) +
+    geom_point(size = .9) +
+    geom_smooth(aes(group = paste(group, gas, Chamber), x = secs, y = value),
+      method = "lm", se = F, color = "black",
+      data = . %>% filter(used == "yes"),
+      linewidth = 0.5
+    ) +
+    scale_alpha_manual(
+      values = c(1, 0.2),
+      breaks = c("yes", "no")
+    ) +
+    scale_color_manual(
+      values = color.gradient
+    ) +
+    scale_shape_manual(
+      values = c(21, 19),
+      breaks = c("no", "yes")
+    ) +
+    ylab("Value") +
+    xlab("Seconds since start time") +
+    facet_grid(gas~location, scales = "free_y") +
+    theme_bw() +
+    theme( # axis.text.x = element_text(angle = 30, vjust = 1.0, hjust = 1.0),
+      legend.position = "none",
+      strip.background = element_rect(fill = "grey95", color = "grey")
+    ) +
+    ggtitle(input$time_date)
+
+  plotly::ggplotly(p1, tooltip = c("TIMESTEP", "value", "Chamber"))
+})
+
+errors_df <- read_csv("https://raw.githubusercontent.com/abbylewis/Chapada_flux_data/refs/heads/master/processed_data/error_codes.csv") %>%
+  mutate(TIMESTAMP = force_tz(TIMESTAMP, "EST"))
+
+output$plot_errors <- renderPlotly({
+  errors_recent <- errors_df %>%
+    filter(
+      as_date(TIMESTAMP) <= input$today,
+      as_date(TIMESTAMP) > (input$today - days(input$days_to_plot))
+    )
+  
+  errors <- errors_recent %>%
+    select(TIMESTAMP, location, Chamber, Diag) %>%
+    mutate(year = year(TIMESTAMP)) %>%
+    pivot_longer(c(Diag),
+                 names_to = "variable")
+
+  if (input$daily == "Daily mean") {
+    errors2 <- errors %>%
+      mutate(
+        TIMESTAMP = as_date(TIMESTAMP),
+        TIMESTAMP = as.POSIXct(TIMESTAMP)
+      ) %>%
+      group_by(TIMESTAMP, year, variable, location) %>%
+      summarize(
+        value = mean(value, na.rm = T),
+        .groups = "drop"
+      )
+  } else {
+    errors2 <- errors
+  }
+
+  p1 <- errors2 %>%
+    ggplot(aes(x = TIMESTAMP, y = value)) +
+    geom_line() +
+    ylab("Value") +
+    facet_wrap(~location, ncol = 1, scales = "free_y") +
+    scale_color_manual(
+      values = color.gradient,
+      breaks = chamber_levels
+    ) +
+    theme_bw() +
+    theme(
+      axis.title.x = element_blank(),
+      axis.text.x = element_text(angle = 30, vjust = 1.0, hjust = 1.0),
+      strip.background = element_rect(fill = "grey95", color = "grey")
+    )
+
+  plotly::ggplotly(p1, tooltip = c("Chamber", "TIMESTAMP", "value")) %>%
+    layout(
+      legend = list(
+        tracegroupgap = 0
+      )
+    )
 })
 ```
 
