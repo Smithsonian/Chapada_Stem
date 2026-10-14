@@ -12,9 +12,9 @@ invisible(lapply(list.files(Sys.getenv("github_functions"), pattern = "\\.R$", f
 # invisible(lapply(list.files("functions/", pattern = "\\.R$", full.names = TRUE), source))
 
 #relevant directories
-rawData_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/sensor_data/0_RawData/unprocessed_archive_data/")
-rawDataArchive_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/sensor_data/0_RawData/archive_data/") 
-rawCSVData_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/sensor_data/1_RawCSVData/unprocessed/")
+rawData_dir <- Sys.getenv("chapada_unprocessed_archive")
+rawDataArchive_dir <- Sys.getenv("chapada_processed_archive")
+rawCSVData_dir <- Sys.getenv("chapada_csv")
 
 #date processed to append to .dat files after moved to archive_date folder
 conversion_date <- format(Sys.time(), "_%Y%m%d%H%M%S")
