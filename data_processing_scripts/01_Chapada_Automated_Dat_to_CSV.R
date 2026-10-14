@@ -9,14 +9,19 @@ library(data.table)
 
 #Load all functions 
 invisible(lapply(list.files(Sys.getenv("github_functions"), pattern = "\\.R$", full.names = TRUE), source))
+# invisible(lapply(list.files("functions/", pattern = "\\.R$", full.names = TRUE), source))
 
 #relevant directories
 rawData_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/sensor_data/0_RawData/unprocessed_archive_data/")
 rawDataArchive_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/sensor_data/0_RawData/archive_data/") 
 rawCSVData_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_Data/sensor_data/1_RawCSVData/unprocessed/")
 
+#date processed to append to .dat files after moved to archive_date folder
+conversion_date <- format(Sys.time(), "_%Y%m%d%H%M%S")
+
 #list files in the raw data folder to be converted. 
 files <- list.files(rawData_dir, full.names = T)%>%
+  str_subset(pattern = "\\d{14}",negate = FALSE)%>% #Any file that does not contain date/time in the name. this file must be manually investigated
   str_subset(pattern = 'backup',negate = TRUE)%>% #We are not processing backup tables
   str_subset(pattern = 'FLUX_7810',negate = TRUE)%>% #We are not currently processing licor data
   str_subset(pattern = 'FLUX_COMB',negate = TRUE)%>% #we are not currently processing licor data
@@ -43,7 +48,7 @@ for (file in files){
   
   
   #Move the Raw Loggernet data file into the archive----------------------------------------------------------------------------------
-  file.rename(file, paste0(rawDataArchive_dir, basename(file)))
+  file.rename(file, paste0(rawDataArchive_dir, paste0(substr(basename(file),1,(nchar(basename(file))-4)), conversion_date, ".dat")))
   
 }
 
