@@ -19,7 +19,12 @@ invisible(lapply(list.files("functions/", pattern = "\\.R$", full.names = TRUE),
 #We only want to do this on monthly files that have ALL of their loggernet data.
 #enter in the vector below any months that may not have a complete data set yet in the format yyyy-mm
 #reccommend excluding the current month and the previous month 
-exclude_months <- c("2025-11", "2025-12")%>%
+# exclude_months <- c("2026-06", "2026-06")%>%
+#   paste(collapse = "|")
+#automated current and previous month exclusion
+currentmonth <- format(Sys.Date(), "%Y-%m")
+previousmonth <- format(Sys.Date() %m-% months(1), "%Y-%m")
+exclude_months <- c(currentmonth, previousmonth)%>%
   paste(collapse = "|")
 
 
@@ -34,7 +39,6 @@ L0_NormalizedData_dir <- paste0(Sys.getenv("dropbox_filepath") , "Chapada_Stem_D
 merged_design <- load_design_table()
 #get the names of the tables from the design document
 table_names <- unique(merged_design$Table)
-
 
 
 #File Selection for Processing ---------------------------------------------------------------------------------------

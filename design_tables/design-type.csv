@@ -29,10 +29,10 @@ flag_15,numeric,NA,,,no,
 flag_16,numeric,NA,,,no,
 logger_name,character,NA,,,no,
 packbus_id,character,NA,,,no,
-redox_5cm_refa,numeric,mVolts,0.1,3000,yes,50
-redox_15cm_refa,numeric,mVolts,0.1,3000,yes,50
-redox_5cm_refb,numeric,mVolts,0.1,3000,yes,50
-redox_15cm_refb,numeric,mVolts,0.1,3000,yes,50
+redox_5cm_refa,numeric,mVolts,-3000,3000,yes,50
+redox_15cm_refa,numeric,mVolts,-3000,3000,yes,50
+redox_5cm_refb,numeric,mVolts,-3000,3000,yes,50
+redox_15cm_refb,numeric,mVolts,-3000,3000,yes,50
 battv_avg,numeric,volts,10,14,no,
 volumetric_water_content_teros12,numeric,m3/m3,0.1,5000,yes,200
 air_temperature_teros12,numeric,degrees C,0.1,100,yes,10
@@ -92,6 +92,6 @@ we_tilt_min,numeric,degrees,0,360,no,
 we_tilt_tmn,numeric,local,,,no,
 cv_meta,character,NA,,,no,
 hydros_id,character,NA,,,no,
-depth,numeric,mm,,,no,
-temperature,numeric,degrees C,,,no,
-electrical_conductivity_hydros,numeric,microsiemens per centimeter,,,no,
+depth,numeric,mm,-500,3000,no,
+temperature,numeric,degrees C,0.1,50,no,
+electrical_conductivity_hydros,numeric,microsiemens per centimeter,0.1,1000,no,
